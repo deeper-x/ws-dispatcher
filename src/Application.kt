@@ -43,7 +43,7 @@ fun Application.module(testing: Boolean = false) {
             clients.add(client)
             try {
                 while (true) {
-                    val frame = incoming.receive()
+                    val frame = incoming.receiveOrNull() ?: break
                     when (frame) {
                         is Frame.Text -> {
                             val text = frame.readText()
@@ -52,6 +52,8 @@ fun Application.module(testing: Boolean = false) {
                             for (other in clients.toList()) {
                                 other.session.outgoing.send(Frame.Text(textToSend))
                             }
+                        } else -> {
+                            println("Frame type not allowed")
                         }
                     }
                 }
