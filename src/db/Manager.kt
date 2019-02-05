@@ -1,12 +1,26 @@
 package com.websocketReport.db
 
+import com.websocketReport.utils.FileSysManager
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.io.FileInputStream
+import java.io.FileReader
+import java.util.*
 
-class Manager (val username: String, val password: String, val Host: String, val dbName: String){
+class Manager (){
     init {
-        Database.connect("jdbc:postgresql://localhost:5432/$dbName", driver = "org.postgresql.Driver", user = username, password = password)
+        val fileSysmanager = FileSysManager()
+        val authProperty = fileSysmanager.getAuthProperty()
+
+        val username = authProperty["db.username"]
+        val password = authProperty["db.password"]
+        val host = authProperty["db.host"]
+        val port = authProperty["db.port"]
+        val driver = authProperty["db.driver"]
+        val db = authProperty["db.name"]
+
+        Database.connect("jdbc:postgresql://${host}:${port}/${db}", driver = "${driver}", user = "${username}", password = "${password}")
     }
 
     fun runSelectQuery(inputQuery: String, fieldList: List<String>): List<String> {

@@ -50,7 +50,7 @@ fun Application.module(testing: Boolean = false) {
                     val frameSent = incoming.receiveOrNull() ?: break
                     when (frameSent) {
                         is Frame.Text -> {
-                            val objDb = Manager("USER", "PASSWORD", "127.0.0.1", "DBNAME")
+                            val objDb = Manager()
                             val idPortinformer = frameSent.readText().toInt()
                             // Iterate over all the connections
                             val textToSend = "${client.name} report: ${objDb.runSelectQuery("SELECT * FROM trips_logs where fk_portinformer = $idPortinformer;", listOf("ts_main_event_field_val"))}"
