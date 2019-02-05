@@ -1,5 +1,6 @@
 package com.websocketReport
 
+import com.websocketReport.db.Manager
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
@@ -11,6 +12,9 @@ import io.ktor.http.cio.websocket.*
 import java.time.*
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class ChatClient(val session: DefaultWebSocketSession) {
     companion object { var lastId = AtomicInteger(0) }
@@ -43,15 +47,17 @@ fun Application.module(testing: Boolean = false) {
             clients.add(client)
             try {
                 while (true) {
-                    val frame = incoming.receiveOrNull() ?: break
-                    when (frame) {
+                    val frameSent = incoming.receiveOrNull() ?: break
+                    when (frameSent) {
                         is Frame.Text -> {
-                            val text = frame.readText()
+                            val objDb = Manager("USER", "PASSWORD", "127.0.0.1", "DBNAME")
+                            val idPortinformer = frameSent.readText().toInt()
                             // Iterate over all the connections
-                            val textToSend = "${client.name} said: $text"
+                            val textToSend = "${client.name} report: ${objDb.runSelectQuery("SELECT * FROM trips_logs where fk_portinformer = $idPortinformer;", listOf("ts_main_event_field_val"))}"
                             for (other in clients.toList()) {
                                 other.session.outgoing.send(Frame.Text(textToSend))
                             }
+
                         } else -> {
                             println("Frame type not allowed")
                         }
