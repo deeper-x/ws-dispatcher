@@ -1,4 +1,4 @@
-# Message dispatcher
+# Resultset dispatcher
 
 Build:
 ```bash
