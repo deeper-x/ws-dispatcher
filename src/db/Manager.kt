@@ -29,7 +29,9 @@ class Manager (){
         transaction {
             TransactionManager.current().exec(inputQuery){ rs->
                 while (rs.next()){
-                    resVal.add(rs.getString(fieldList[0]))
+                    fieldList.forEach{
+                        resVal.add(rs.getString(it))
+                    }
                 }
             }
         }

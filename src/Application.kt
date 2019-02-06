@@ -51,9 +51,9 @@ fun Application.module(testing: Boolean = false) {
                     when (frameSent) {
                         is Frame.Text -> {
                             val objDb = Manager()
-                            val idPortinformer = frameSent.readText().toInt()
+                            val inputQuery = frameSent.readText()
                             // Iterate over all the connections
-                            val textToSend = "${client.name} report: ${objDb.runSelectQuery("SELECT * FROM trips_logs where fk_portinformer = $idPortinformer;", listOf("ts_main_event_field_val"))}"
+                            val textToSend = "${client.name} report: ${objDb.runSelectQuery(inputQuery, listOf("portinformer_code", "id_portinformer"))}"
                             for (other in clients.toList()) {
                                 other.session.outgoing.send(Frame.Text(textToSend))
                             }
