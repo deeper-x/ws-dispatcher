@@ -27,15 +27,15 @@ Client conntected to the endpoint, sends Payload (binary or text). To consume se
 # HOST 1
 wscat -c 'ws://<server>:8080/ws-server'
 > SELECT foo, bar, baz FROM tableX;
-> <[reading resultSet... ]>
+> <[getting resultSet... ]>
 
 # HOST 2
 wscat -c 'ws://<server>:8080/ws-server'
-> <[reading resultSet... ]>
+> <[getting resultSet... ]>
 
 # HOST  2
 wscat -c 'ws://<server>:8080/ws-server'
-> <[reading resultSet... ]>
+> <[getting resultSet... ]>
 ```
 
 
