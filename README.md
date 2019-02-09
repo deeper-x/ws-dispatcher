@@ -1,4 +1,4 @@
-# Message dispatcher
+# Resultset dispatcher
 
 Build:
 ```bash
@@ -26,15 +26,16 @@ Client conntected to the endpoint, sends Payload (binary or text). To consume se
 ```bash
 # HOST 1
 wscat -c 'ws://<server>:8080/ws-server'
->
+> SELECT foo, bar, baz FROM tableX;
+> <[getting resultSet... ]>
 
 # HOST 2
 wscat -c 'ws://<server>:8080/ws-server'
->
+> <[getting resultSet... ]>
 
 # HOST  2
 wscat -c 'ws://<server>:8080/ws-server'
->
+> <[getting resultSet... ]>
 ```
 
 
