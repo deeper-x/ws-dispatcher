@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.websocketReport.ApplicationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-02-03T23:49:11" hostname="Aspire-A315-21" time="1.69">
-  <properties/>
-  <testcase name="testRoot" classname="com.websocketReport.ApplicationTest" time="1.69"/>
-  <system-out><![CDATA[2019-02-04 00:49:13.148 [Test worker] INFO  ktor.test - No ktor.deployment.watch patterns specified, automatic reload is not active
-#TODO DB MANAGEMENT
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
